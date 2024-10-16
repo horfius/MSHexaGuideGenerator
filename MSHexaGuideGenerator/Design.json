@@ -1,0 +1,35 @@
+{
+  "Background": {
+    "Name": "Buccaneer_Background",
+    "Url": "Background.png"
+  },
+  "HeaderText": "Hexa Guide for Buccaneers",
+  "ClassName": "Buccanneer",
+  "Version": "GO WEST",
+  "SkillImages": [
+    {
+      "Name": "origin",
+      "Url": "https://static.wikia.nocookie.net/maplestory/images/6/60/Skill_Unleash_Neptunus.png/revision/latest?cb=20231114032552"
+    },
+    {
+      "Name": "octo",
+      "Url": "octo_naut.png"
+    },
+    {
+      "Name": "Vortex",
+      "Url": "https://static.wikia.nocookie.net/maplestory/images/0/08/Skill_Serpent_Vortex.png/revision/latest?cb=20181115065338"
+    },
+    {
+      "Name": "LotD",
+      "Url": "https://static.wikia.nocookie.net/maplestory/images/7/70/Skill_Lord_of_the_Deep.png/revision/latest?cb=20170609033039"
+    },
+    {
+      "Name": "Howling",
+      "Url": "https://static.wikia.nocookie.net/maplestory/images/2/2f/Skill_Howling_Fist.png/revision/latest?cb=20220609034826"
+    },
+    {
+      "Name": "Lightning",
+      "Url": "https://static.wikia.nocookie.net/maplestory/images/8/8e/Skill_Lightning_Form.png/revision/latest?cb=20220609035101"
+    }
+  ]
+}
