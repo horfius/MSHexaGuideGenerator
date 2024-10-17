@@ -5,14 +5,14 @@
   },
   "HeaderText": "Hexa Guide for Buccaneers",
   "ClassName": "Buccanneer",
-  "Version": "GO WEST",
+  "Version": "UNITY",
   "SkillImages": [
     {
-      "Name": "origin",
+      "Name": "Origin",
       "Url": "https://static.wikia.nocookie.net/maplestory/images/6/60/Skill_Unleash_Neptunus.png/revision/latest?cb=20231114032552"
     },
     {
-      "Name": "octo",
+      "Name": "Octo",
       "Url": "octo_naut.png"
     },
     {
