@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSHexaGuideGenerator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MSHexaGuideGen.Models
 {
-    public record GuideCanvas(WebImageResource Background, string HeaderText, string ClassName, string Version)
+    public record GuideCanvas(WebImageResource Background, string HeaderText, string ClassName, string Version, GuideLegend Legend)
     {
         public List<WebImageResource> SkillImages { get; set; } = new List<WebImageResource>();
 

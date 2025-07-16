@@ -5,7 +5,7 @@
   },
   "HeaderText": "Hexa Guide for Buccaneers",
   "ClassName": "Buccanneer",
-  "Version": "UNITY",
+  "Version": "NEXT",
   "SkillImages": [
     {
       "Name": "Origin",
@@ -30,6 +30,24 @@
     {
       "Name": "Lightning",
       "Url": "https://static.wikia.nocookie.net/maplestory/images/8/8e/Skill_Lightning_Form.png/revision/latest?cb=20220609035101"
+    },
+    {
+      "Name": "Serpent Stone",
+      "Url": "https://orangemushroom.net/wp-content/uploads/2024/12/serpent-stone-vi.png"
+    },
+    {
+      "Name": "Hookbomber",
+      "Url": "https://orangemushroom.net/wp-content/uploads/2024/12/hook-bomber-vi.png"
     }
-  ]
+  ],
+  "Legend": {
+    "Header": "Legend",
+    "Anchor": "BottomRight",
+    "Contents": [
+      {
+        "Icon": "Octo",
+        "Text": "This represents Mastery Cores 1 & 2. Start by unlocking Octopunch, then Nautilus Strike, and then leveling them equally."
+      }
+    ]
+  }
 }

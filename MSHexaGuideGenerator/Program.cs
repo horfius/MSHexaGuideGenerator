@@ -10,7 +10,7 @@ if (!Path.Exists(WebImageResource.LocalFileStorePath))
 var guide = JsonSerializer.Deserialize<GuideCanvas>(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Design.json")));
 if (guide == null)
 {
-    Console.WriteLine("Some error occurred while reading in Design.json, please check it's structure");
+    Console.WriteLine("Some error occurred while reading in Design.json, please check its structure");
     return;
 }
 

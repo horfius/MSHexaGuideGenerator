@@ -1,5 +1,6 @@
 ﻿using MSHexaGuideGen.Models;
 using MSHexaGuideGen.Util;
+using MSHexaGuideGenerator.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -37,6 +38,8 @@ namespace MSHexaGuideGen.Processors
 
         public async Task<Image> Process()
         {
+            var legendAnchor = GuideCanvas.Legend.Anchor.ToLegendAnchor();
+            var isLegendPresent = legendAnchor != LegendAnchor.Invalid;
             var skillImageWidth = 128;
             var skillImageHeight = 128;
             var cyclesX = 8;
@@ -45,14 +48,19 @@ namespace MSHexaGuideGen.Processors
             var cycleOffsetX = 220;
             var cycleOffsetY = 190;
             var imageWidth = 2000;
+            var legendWidth = imageWidth / 2; // Included in the imageWidth
+            var legendHeight = GuideCanvas.Legend.Contents.Length * cycleOffsetY + 64; // Padding
             var baseX = (imageWidth - cyclesX * cycleOffsetX) / 2 + (cycleOffsetX - skillImageWidth) / 2;
+            var legendBaseX = baseX + (legendAnchor.IsLeftAnchored() ? 0 : legendWidth);
             var baseY = 200;
-            var imageHeight = baseY + cyclesY * cycleOffsetY - 47;
+            var legendBaseY = baseY + SkillOrders.Length / cyclesX * cycleOffsetY + 64;
+            var imageHeight = baseY + cyclesY * cycleOffsetY - 47 + (isLegendPresent ? legendHeight - cycleOffsetY : 0);
             Color smokyBlack = Color.FromArgb(0x1A, 0x1A, 0x1A);
 
             var canvas = new Bitmap(imageWidth, imageHeight);
             using var fontFamily = CustomFontFamily;
             using var fontSmall = new Font(fontFamily, 20, FontStyle.Regular, GraphicsUnit.Pixel);
+            using var fontMedium = new Font(fontFamily, 30, FontStyle.Regular, GraphicsUnit.Pixel);
             using var fontLarge = new Font(fontFamily, 40, FontStyle.Regular, GraphicsUnit.Pixel);
             using var fontXLarge = new Font(fontFamily, 60, FontStyle.Regular, GraphicsUnit.Pixel);
 
@@ -74,9 +82,16 @@ namespace MSHexaGuideGen.Processors
             DrawOutlinedText(g, GuideCanvas.HeaderText, headerTextFormat, fontXLarge, headerRect, Color.White, smokyBlack);
 
             using var versionTextFormat = new StringFormat();
-            versionTextFormat.Alignment = StringAlignment.Far;
-            versionTextFormat.LineAlignment= StringAlignment.Far;
+            versionTextFormat.LineAlignment = StringAlignment.Far;
             Rectangle versionRect = new Rectangle(0, imageHeight - baseY, imageWidth, baseY);
+            if (legendAnchor != LegendAnchor.BottomRight)
+            {
+                versionTextFormat.Alignment = StringAlignment.Far;
+            }
+            else
+            {
+                versionTextFormat.Alignment = StringAlignment.Near;
+            }
             DrawOutlinedText(g, $"Patch {GuideCanvas.Version}", versionTextFormat, fontLarge, versionRect, Color.White, Color.Black);
 
             using var disposables = new CompositeDisposable();
@@ -104,6 +119,35 @@ namespace MSHexaGuideGen.Processors
                 using var levelTextFormat = new StringFormat();
                 levelTextFormat.Alignment = StringAlignment.Center;
                 DrawOutlinedText(g, $"Lv {SkillOrders[i].Level}", levelTextFormat, fontLarge, imageTextRect, Color.White, smokyBlack);
+            }
+
+            if (isLegendPresent)
+            {
+                using var legendTextFormat = new StringFormat();
+                legendTextFormat.Alignment = StringAlignment.Center;
+                legendTextFormat.LineAlignment = StringAlignment.Center;
+                Rectangle legendTextRect = new Rectangle(legendBaseX - baseX, legendBaseY, legendWidth, legendHeight);
+                DrawOutlinedText(g, GuideCanvas.Legend.Header, legendTextFormat, fontXLarge, legendTextRect, Color.White, Color.Black);
+
+                for (var i = 0; i < GuideCanvas.Legend.Contents.Length; i++)
+                {
+                    if (!string.IsNullOrEmpty(GuideCanvas.Legend.Contents[i].Icon))
+                    {
+                        var imageRect = new Rectangle(legendBaseX, legendBaseY + (i + 1) * cycleOffsetY, skillImageWidth, skillImageHeight);
+                        var textRect = new Rectangle(legendBaseX + skillImageWidth + 16,
+                            legendBaseY + (i + 1) * cycleOffsetY, // Padding from header
+                            legendWidth - skillImageWidth - baseX - 64,
+                            skillImageHeight);
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.InterpolationMode = InterpolationMode.Low;
+                        g.DrawImage(await GuideCanvas.GetImage(GuideCanvas.Legend.Contents[i].Icon).GetImage(), imageRect);
+
+                        using var textFormat = new StringFormat();
+                        textFormat.Alignment = StringAlignment.Near;
+                        textFormat.LineAlignment = StringAlignment.Center;
+                        DrawOutlinedText(g, GuideCanvas.Legend.Contents[i].Text, textFormat, fontMedium, textRect, Color.White, Color.Black);
+                    }
+                }
             }
 
             return canvas!;

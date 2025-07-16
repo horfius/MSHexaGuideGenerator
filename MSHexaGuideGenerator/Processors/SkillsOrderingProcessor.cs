@@ -43,14 +43,14 @@ namespace MSHexaGuideGen.Processors
                     {
                         lowestName = skill.Key;
                         lowestLevel = skill.Value[0].Level;
-                        greatestVal = skill.Value[0].PercentGain + 0.05;
+                        greatestVal = skill.Value[0].PercentGain + 0.01;
                     }
                 }
                 optimizedOrder.Add(skillsMapped[lowestName][0]);
                 skillsMapped[lowestName].RemoveAt(0);
             }
 
-            const double fuzzyThreshold = 0.3; 
+            const double fuzzyThreshold = 0.03; 
             for (var i = 1; i < optimizedOrder.Count - 1; i++)
             {
                 if (optimizedOrder[i].SkillName != optimizedOrder[i-1].SkillName &&
